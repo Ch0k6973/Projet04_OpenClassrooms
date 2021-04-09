@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="All"
+        android:id="@+id/menu_all"
+        app:showAsAction="never"/>
+    <item
+        android:title="Date"
+        android:id="@+id/menu_date"
+        app:showAsAction="never"/>
+    <item
+        android:title="Room"
+        android:id="@+id/menu_room"
+        app:showAsAction="never"/>
+</menu>

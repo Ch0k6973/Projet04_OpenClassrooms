@@ -1,20 +1,19 @@
 package com.example.mareu.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
-import android.content.Context;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.example.mareu.R;
-import com.example.mareu.databinding.ActivityCreateMeetingBinding;
 import com.example.mareu.databinding.ActivityMeetingListBinding;
 import com.example.mareu.di.DI;
 import com.example.mareu.events.DeleteMeetingEvent;
@@ -24,6 +23,12 @@ import com.example.mareu.ui.adapter.MyMeetingRecyclerViewAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import static com.example.mareu.model.MeetingRoom.ODIN;
 
 
 public class MeetingListActivity extends AppCompatActivity {
@@ -48,18 +53,58 @@ public class MeetingListActivity extends AppCompatActivity {
         });
 
         for(Meeting m : mApiService.getMeeting()){
-            System.out.println("\n\tRéunion n°" + m.getId() + "\n\tLieu : " + m.getRoom() + "\n\tHeure : " + m.getHour().getHour() + "\n\tSujet : " + m.getSubject() + "\n\tMembres : " + m.getMember() + "\n\n");
+            System.out.println("\n\tRéunion n°" + m.getId() + "\n\tLieu : " + m.getRoom() + "\n\tDate : " + m.getDate() + "/" + m.getDate().getMonth() + "\n\tHeure : " + m.getDate().getTime() + "\n\tSujet : " + m.getSubject() + "\n\tMembres : " + m.getMember() + "\n\n");        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Calendar calendar = Calendar.getInstance();
+        switch(item.getItemId()){
+            case R.id.menu_all:
+                initRecycler(mApiService.getMeeting());
+                return true;
+            case R.id.menu_date:
+
+                DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(year, month, dayOfMonth);
+                        initRecycler(mApiService.getMeetingDate(calendar.getTime()));
+                    }
+                };
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                        android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                        dateSetListener,
+                        2021,
+                        calendar.getTime().getMonth(),
+                        calendar.getTime().getDay()
+                );
+                datePickerDialog.show();
+                return true;
+            case R.id.menu_room:
+
+                initRecycler(mApiService.getMeetingRoom(ODIN));
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initRecycler();
+        initRecycler(mApiService.getMeeting());
     }
 
-    public void initRecycler() {
-        MyMeetingRecyclerViewAdapter mAdapter = new MyMeetingRecyclerViewAdapter(mApiService.getMeeting());
+    public void initRecycler(List<Meeting> meetingList) {
+        MyMeetingRecyclerViewAdapter mAdapter = new MyMeetingRecyclerViewAdapter(meetingList);
         binding.recyclerView.setAdapter(mAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -79,6 +124,6 @@ public class MeetingListActivity extends AppCompatActivity {
     @Subscribe
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         mApiService.deleteMeeting(event.mMeeting);
-        initRecycler();
+        initRecycler(mApiService.getMeeting());
     }
 }

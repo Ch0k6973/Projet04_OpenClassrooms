@@ -1,23 +1,27 @@
 package com.example.mareu.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Meeting {
 
     private long id;
 
+    private int color;
+
     private MeetingRoom room;
 
-    private Hour hour;
+    private Date mDate;
 
     private String subject;
 
     private String member;
 
-    public Meeting(long id, MeetingRoom room, Hour hour, String subject, String member) {
+    public Meeting(long id, int color, MeetingRoom room, Date date, String subject, String member) {
         this.id = id;
-        this.hour = hour;
+        this.color = color;
         this.room = room;
+        this.mDate = date;
         this.subject = subject;
         this.member = member;
     }
@@ -30,6 +34,14 @@ public class Meeting {
         this.id = id;
     }
 
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
+    }
+
     public MeetingRoom getRoom() {
         return room;
     }
@@ -38,12 +50,12 @@ public class Meeting {
         this.room = room;
     }
 
-    public Hour getHour() {
-        return hour;
+    public Date getDate() {
+        return mDate;
     }
 
-    public void setHour(Hour hour) {
-        this.hour = hour;
+    public void setDate(Date date) {
+        this.mDate = date;
     }
 
     public String getSubject() {

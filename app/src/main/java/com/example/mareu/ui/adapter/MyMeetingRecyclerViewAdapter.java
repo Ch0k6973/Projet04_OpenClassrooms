@@ -12,12 +12,14 @@ import com.example.mareu.model.Meeting;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
 public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeetingRecyclerViewAdapter.ViewHolder> {
 
     private final List<Meeting> mMeeting;
+    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
 
     public MyMeetingRecyclerViewAdapter(List<Meeting> items){
         mMeeting = items;
@@ -31,7 +33,8 @@ public class MyMeetingRecyclerViewAdapter extends RecyclerView.Adapter<MyMeeting
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Meeting meeting = mMeeting.get(position);
-        holder.binding.itemListTitle.setText(meeting.getRoom() + " - " + meeting.getHour().getHour() + " - " + meeting.getSubject());
+        holder.binding.itemListAvatar.setBackgroundColor(meeting.getColor());
+        holder.binding.itemListTitle.setText(meeting.getRoom() + " - " + sdf.format(meeting.getDate()) + " - " + meeting.getSubject());
         holder.binding.itemListMember.setText(meeting.getMember());
 
         holder.binding.itemListDeleteButton.setOnClickListener(new View.OnClickListener() {
