@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.example.mareu.R;
 import com.example.mareu.databinding.ActivityCreateMeetingBinding;
 import com.example.mareu.di.DI;
 import com.example.mareu.model.Meeting;

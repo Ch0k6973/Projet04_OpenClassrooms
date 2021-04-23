@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import com.example.mareu.databinding.ActivityMeetingListBinding;
 import com.example.mareu.di.DI;
 import com.example.mareu.events.DeleteMeetingEvent;
 import com.example.mareu.model.Meeting;
+import com.example.mareu.model.MeetingRoom;
 import com.example.mareu.service.MeetingApiService;
 import com.example.mareu.ui.adapter.MyMeetingRecyclerViewAdapter;
 
@@ -29,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.mareu.model.MeetingRoom.ODIN;
+import static com.example.mareu.model.MeetingRoom.getRooms;
 
 
 public class MeetingListActivity extends AppCompatActivity {
@@ -90,8 +93,14 @@ public class MeetingListActivity extends AppCompatActivity {
                 datePickerDialog.show();
                 return true;
             case R.id.menu_room:
+                AlertDialog.Builder b = new AlertDialog.Builder(this);
+                b.setTitle("Select a room : ");
+                b.setItems(getRooms(), (dialog, which) -> {
+                    dialog.dismiss();
+                    initRecycler(mApiService.getMeetingRoom(MeetingRoom.values()[which]));
+                });
+                b.show();
 
-                initRecycler(mApiService.getMeetingRoom(ODIN));
                 return true;
         }
         return super.onOptionsItemSelected(item);
