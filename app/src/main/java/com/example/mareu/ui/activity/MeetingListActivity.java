@@ -87,8 +87,8 @@ public class MeetingListActivity extends AppCompatActivity {
                         android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
                         dateSetListener,
                         2021,
-                        calendar.getTime().getMonth(),
-                        calendar.getTime().getDay()
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)
                 );
                 datePickerDialog.show();
                 return true;

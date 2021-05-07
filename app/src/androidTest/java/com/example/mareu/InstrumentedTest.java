@@ -169,18 +169,11 @@ public class InstrumentedTest {
 
     @Test
     public void myMeetingList_filterAction_filterByDate() {
-        myMeetingList_createAction_createNewMeeting();
         Calendar mCalendar = Calendar.getInstance();
         mCalendar.set(Calendar.MILLISECOND, 0);
-        mCalendar.set(2021,
-                3,
-                21,
-                10,
-                10,
-                0
-        );
+        mCalendar.set(Calendar.SECOND, 0);
         ViewInteraction overflowMenuButton = onView(
-                allOf(withContentDescription("Options supplémentaires"),
+                allOf(withContentDescription("More options"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),
@@ -199,45 +192,45 @@ public class InstrumentedTest {
                         isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction materialTextView2 = onView(
-                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2021"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialTextView2.perform(click());
-
-        DataInteraction materialTextView3 = onData(anything())
-                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
-                        childAtPosition(
-                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                1)))
-                .atPosition(120);
-        materialTextView3.perform(click());
-
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Mois précédent"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.DayPickerView")),
-                                        childAtPosition(
-                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
-
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Mois précédent"),
-                        childAtPosition(
-                                allOf(withClassName(is("android.widget.DayPickerView")),
-                                        childAtPosition(
-                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
-                                                0)),
-                                1),
-                        isDisplayed()));
-        appCompatImageButton2.perform(click());
+//        ViewInteraction materialTextView2 = onView(
+//                allOf(withText("2021"),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withClassName(is("android.widget.LinearLayout")),
+//                                        0),
+//                                0),
+//                        isDisplayed()));
+//        materialTextView2.perform(click());
+//
+//        DataInteraction materialTextView3 = onData(anything())
+//                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+//                        childAtPosition(
+//                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+//                                1)))
+//                .atPosition(120);
+//        materialTextView3.perform(click());
+//
+//        ViewInteraction appCompatImageButton = onView(
+//                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Mois précédent"),
+//                        childAtPosition(
+//                                allOf(withClassName(is("android.widget.DayPickerView")),
+//                                        childAtPosition(
+//                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+//                                                0)),
+//                                1),
+//                        isDisplayed()));
+//        appCompatImageButton.perform(click());
+//
+//        ViewInteraction appCompatImageButton2 = onView(
+//                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageButton")), withContentDescription("Mois précédent"),
+//                        childAtPosition(
+//                                allOf(withClassName(is("android.widget.DayPickerView")),
+//                                        childAtPosition(
+//                                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+//                                                0)),
+//                                1),
+//                        isDisplayed()));
+//        appCompatImageButton2.perform(click());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -256,7 +249,7 @@ public class InstrumentedTest {
     @Test
     public void myMeetingList_filterAction_filterByRoom() {
         ViewInteraction overflowMenuButton = onView(
-                allOf(withContentDescription("Options supplémentaires"),
+                allOf(withContentDescription("More options"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.action_bar),
